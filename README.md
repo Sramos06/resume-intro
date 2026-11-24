@@ -1,25 +1,36 @@
 # resume-intro
 
-An animated intro for my resume site. It's a prototype for the next version, with an ink-and-paper look, small matcha and coffee accents, and a quiet cultivation-story feel.
+A prototype for the next version of my resume site. It has an ink-and-paper look, small matcha and coffee accents, and a quiet cultivation-story feel. Every page has its own motion, and something is always moving.
 
 **Live:** https://sramos06.github.io/resume-intro/
 
-## What happens
+## Pages
 
-1. **Panel pop-in.** Five ink and paper panels pop in one at a time on a beat, each with a small flash and screen shake.
-2. **Swallow.** The side panels fly off and the center mountain panel grows until it fills the screen.
-3. **Fly-forward.** Ridgelines rush toward the camera out of the mist while ink streaks speed out from the center.
-4. **Landing.** The scene fades into the main page, with mountain ridges drifting slowly behind the name.
+| Page | What moves |
+|---|---|
+| **Home** (`index.html`) | Intro on the first visit, then mountain ridges drifting behind the name |
+| **Projects** (`projects.html`) | Hanging scrolls that unroll into view, bobbing symbols, falling leaves |
+| **Repaso case study** (`repaso.html`) | Clouds over the header, an ink reading line with a breathing tip, counting stats |
+| **About** (`about.html`) | An ensō that keeps redrawing around the seal, rising specks, inked skill lines |
+| **Resume** (`resume.html`) | A sheet that lifts in and gets stamped, ruled sections, drifting color blooms, print-to-PDF layout |
 
-You can skip the intro, and it's skipped entirely when the device asks for reduced motion.
+Moving between pages uses an ink wipe. Everything respects the reduced-motion setting.
+
+## The intro
+
+1. **Collage.** The camera zooms out from the seal while torn-paper cutouts slide in from the edges and ribbons sweep across, then it blurs into a white flash.
+2. **Panorama.** One ink landscape is revealed as five tinted slices that bloom in on the beat. A vertical word column gets pushed right by each slice, while ribbons loop in front.
+3. **Exit.** A blur-zoom with a shake drops into a fly-forward through the mountains, which lands on the main page.
+
+It plays once per visit. **Replay intro** on the main page plays it again.
 
 ## How it's built
 
 Plain HTML, CSS and JavaScript with no build step and no libraries.
 
-- The mountains are SVG paths generated from seeded sine waves, so they look the same on every load.
-- The panel and fly animations use the Web Animations API, and the fly-through is a CSS 3D perspective scene.
-- The ink streaks are drawn on a `<canvas>`.
+- `common.js` holds the shared pieces: seeded mountain ridgelines, the SVG symbol set, scroll reveals and the page wipe.
+- The animations use the Web Animations API and CSS. The fly-through is a CSS 3D perspective scene, and the leaves, specks and ink streaks are drawn on `<canvas>`.
+- Art and symbol plans are in [`docs/art-ideas.md`](docs/art-ideas.md).
 
 ## Run locally
 
