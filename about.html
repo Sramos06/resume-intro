@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About · Shawn Angel Ramos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body class="about-page">
+  <canvas class="ambient" aria-hidden="true"></canvas>
+
+  <nav class="nav">
+    <a class="mark" href="index.html" aria-label="Home">S</a>
+    <ul>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="resume.html">Resume</a></li>
+    </ul>
+  </nav>
+
+  <main class="page about">
+    <header class="about-hero">
+      <div>
+        <p class="kicker" data-reveal>About</p>
+        <h1 data-reveal>Hi, I'm Shawn.</h1>
+        <p class="lead" data-reveal>I'm a 3rd-year BSIT student at PUP Manila, and I build the tools I wish I already had.</p>
+      </div>
+      <div class="enso" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <circle class="ring" cx="100" cy="100" r="84" pathLength="1"/>
+          <circle class="ring thin" cx="100" cy="100" r="92" pathLength="1"/>
+        </svg>
+        <span class="seal-big">S</span>
+      </div>
+    </header>
+
+    <section class="story" data-reveal>
+      <p>I started out strongest in Python and Java, the languages school taught me first. JavaScript and TypeScript came later, mostly by building things I actually needed, like a study app for the reviewers I make before every exam.</p>
+      <p>I care most about the part after the code works: does it load on a slow phone on campus wifi, does it lose anyone's data, would I actually use it every day. Outside class I read a lot of cultivation novels, which is where this site's ink-and-mountains look comes from, and I've been building a cultivation game on Roblox.</p>
+      <blockquote class="quote">Time never returns, thus let's live a faithful life.</blockquote>
+    </section>
+
+    <section data-reveal>
+      <h2 class="section-title">Skills</h2>
+      <div class="skills" data-reveal>
+        <div>
+          <h3 class="kicker">Strongest</h3>
+          <ul style="--w: 1"><li>Python</li><li>Java</li></ul>
+        </div>
+        <div>
+          <h3 class="kicker">Building with</h3>
+          <ul style="--w: .72"><li>JavaScript</li><li>TypeScript</li><li>HTML and CSS</li><li>SQL</li><li>Next.js</li></ul>
+        </div>
+        <div>
+          <h3 class="kicker">Also use</h3>
+          <ul style="--w: .48"><li>Git and GitHub</li><li>Luau (Roblox)</li><li>Photopea</li><li>Claude Code</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section data-reveal>
+      <h2 class="section-title">Outside the code</h2>
+      <div class="interests">
+        <div class="interest" style="--d: 0s"><svg class="sym" viewBox="0 0 100 100" data-symbol="sword"></svg><h3>Cultivation novels</h3><p>Where the mountains, seals and ink on this site come from.</p></div>
+        <div class="interest" style="--d: -2s"><svg class="sym" viewBox="0 0 100 100" data-symbol="pine"></svg><h3>Game dev</h3><p>Daoborn, a cultivation RPG on Roblox.</p></div>
+        <div class="interest" style="--d: -4s"><svg class="sym" viewBox="0 0 100 100" data-symbol="brush"></svg><h3>Animation and editing</h3><p>Frame-by-frame work and photo edits from my multimedia classes.</p></div>
+        <div class="interest" style="--d: -6s"><svg class="sym" viewBox="0 0 100 100" data-symbol="leaf"></svg><h3>Study tools</h3><p>Reviewers with quizzes, and the app that keeps them on my phone.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="foot-line">Let's build something.</p>
+    <ul>
+      <li><a href="https://github.com/Sramos06" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sramos006" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+    <small>© 2026 Shawn Angel Ramos</small>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="about.js"></script>
+</body>
+</html>

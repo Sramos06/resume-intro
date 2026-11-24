@@ -150,10 +150,94 @@ html { scroll-behavior: smooth; }
   .rail { display: none; }
 }
 
+/* ---------- About: an ensō that keeps redrawing, rising motes, inked skill lines ---------- */
+.section-title { margin-bottom: 26px; font: 500 clamp(34px, 4.4vw, 50px) / 1.1 "Cormorant Garamond", serif; }
+.about section { max-width: 1000px; padding-bottom: 80px; }
+
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(200px, .75fr);
+  align-items: center;
+  gap: 40px;
+  padding: 6vh 0 8vh;
+}
+.enso { position: relative; width: min(100%, 340px); aspect-ratio: 1; justify-self: center; }
+.enso svg { width: 100%; height: 100%; overflow: visible; }
+.enso .ring {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: .88 1;
+  transform: rotate(-100deg);
+  transform-origin: center;
+  animation: enso 9s cubic-bezier(.6,0,.3,1) infinite;
+}
+.enso .ring.thin { stroke: var(--coffee); stroke-width: 2; opacity: .5; animation-delay: .25s; }
+@keyframes enso {
+  0% { stroke-dashoffset: .88; opacity: 1; }
+  32% { stroke-dashoffset: 0; }
+  82% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+.seal-big {
+  position: absolute;
+  inset: 31%;
+  display: grid;
+  place-items: center;
+  background: var(--matcha);
+  color: var(--paper-2);
+  font: 600 clamp(40px, 6vw, 72px) "Cormorant Garamond", serif;
+  animation: hover 7s ease-in-out infinite;
+}
+@keyframes hover { 50% { transform: translateY(-8px); } }
+
+.story { max-width: 700px; }
+.story p { font-size: 18px; line-height: 1.75; color: #3a3833; }
+.story p + p { margin-top: 16px; }
+.quote {
+  margin: 44px 0 0;
+  padding-left: 22px;
+  border-left: 3px solid var(--matcha);
+  font: italic 500 clamp(26px, 3.2vw, 38px) / 1.3 "Cormorant Garamond", serif;
+}
+
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+.skills h3 { margin-bottom: 14px; }
+.skills ul { display: grid; gap: 12px; list-style: none; padding: 0; }
+.skills li { position: relative; padding-bottom: 7px; font-size: 18px; }
+/* Each underline inks itself in, longer for the languages I'm strongest in */
+.skills li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s cubic-bezier(.2,.7,.2,1) calc(var(--k, 0) * 110ms + .2s);
+}
+.skills.in li::after { transform: scaleX(var(--w, 1)); }
+.skills ul[style*="--w: 1"] li::after { background: var(--matcha); }
+
+.interests { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.interest { padding: 26px 22px; background: var(--paper-2); border: 1px solid var(--line); }
+.interest .sym { width: 46px; height: 46px; margin-bottom: 16px; color: var(--ink); animation: bob 6s ease-in-out infinite; animation-delay: var(--d, 0s); }
+.interest h3 { margin-bottom: 6px; font: 500 24px "Cormorant Garamond", serif; }
+.interest p { color: var(--mute); line-height: 1.55; font-size: 15px; }
+
+@media (max-width: 720px) {
+  .about-hero { grid-template-columns: 1fr; }
+  .enso { width: 220px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scroll .sym { animation: none; }
   .scroll[data-reveal]:not(.in) .scroll-body { clip-path: inset(0); }
   .scroll[data-reveal]:not(.in)::after { top: calc(100% - 18px); }
-  .sky span, .rail .ink::after { animation: none; }
+  .sky span, .rail .ink::after, .enso .ring, .seal-big, .interest .sym { animation: none; }
+  .enso .ring { stroke-dashoffset: 0; }
   html { scroll-behavior: auto; }
 }
