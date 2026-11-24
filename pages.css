@@ -11,6 +11,34 @@
 .btn-link { font-weight: 500; font-size: 14px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--matcha); }
 .btn-link:hover, .btn-link:focus-visible { color: var(--coffee); border-color: var(--coffee); }
 
+/* Fixed background scenes, drawn behind the page content */
+.scenery { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+
+/* ---------- Projects: a lone tree on a hill ---------- */
+.tree-scene .hill { position: absolute; bottom: 0; left: 0; width: 100%; height: 16vh; fill: #ddd7cb; }
+.tree-scene .tree { position: absolute; right: 2vw; bottom: 3vh; width: 44vw; height: 90vh; overflow: visible; }
+.tree .wood { fill: none; stroke: var(--ink-2); stroke-linecap: round; }
+.tree .leaf { fill: rgba(42, 41, 38, .13); }
+.tree .leaf.green { fill: rgba(126, 148, 102, .28); }
+.tree .branch { animation: sway var(--dur) ease-in-out var(--delay) infinite alternate; }
+@keyframes sway {
+  from { rotate: calc(var(--amp) * -1deg); }
+  to { rotate: calc(var(--amp) * 1deg); }
+}
+.blown-leaf {
+  position: absolute;
+  width: 12px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(42, 41, 38, .45);
+}
+.blown-leaf.green { background: rgba(126, 148, 102, .6); }
+
+/* Keep the project list on the left so the tree stays visible on wide screens */
+@media (min-width: 1000px) {
+  .projects-page .page { max-width: 60vw; }
+}
+
 /* ---------- Projects: hanging scrolls that unroll into view ---------- */
 .shelf {
   display: grid;
@@ -338,7 +366,7 @@ html { scroll-behavior: smooth; }
   .scroll .sym { animation: none; }
   .scroll[data-reveal]:not(.in) .scroll-body { clip-path: inset(0); }
   .scroll[data-reveal]:not(.in)::after { top: calc(100% - 18px); }
-  .sky span, .rail .ink::after, .enso .ring, .seal-big, .interest .sym { animation: none; }
+  .tree .branch, .sky span, .rail .ink::after, .enso .ring, .seal-big, .interest .sym { animation: none; }
   .enso .ring { stroke-dashoffset: 0; }
   .blobs span, .sheet, .stamp { animation: none; }
   .sheet section::before { transform: scaleY(1); transition: none; }

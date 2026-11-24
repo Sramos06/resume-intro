@@ -31,6 +31,73 @@ function ridgeSVG(seed, base, height, fill) {
   return `<svg viewBox="0 0 1000 300" preserveAspectRatio="none"><path d="${ridgePath(seed, base, height)}" fill="${fill}"/></svg>`;
 }
 
+// ---------- Trees ----------
+const SVG_NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs = {}) {
+  const e = document.createElementNS(SVG_NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+
+// A seeded ink tree. Every branch is a <g> that rotates around its own base and holds
+// its children, so a small sway near the trunk carries everything above it.
+// Returns the branches (with depth, 0 = twig) and the leaf cluster centers.
+function growTree(svg, { seed, x, y, length, depth, spread = .5, lean = 0 }) {
+  const r = mulberry32(seed);
+  const branches = [], leaves = [];
+  function grow(parent, x, y, len, ang, d) {
+    const g = svgEl('g', { class: 'branch' });
+    g.style.transformOrigin = `${x}px ${y}px`;
+    g.style.setProperty('--amp', (.15 + (depth - d) * .12).toFixed(2));
+    g.style.setProperty('--dur', (4 + r() * 3).toFixed(2) + 's');
+    g.style.setProperty('--delay', (-r() * 6).toFixed(2) + 's');
+    const x2 = x + Math.cos(ang) * len, y2 = y + Math.sin(ang) * len;
+    const bend = (r() - .5) * len * .35;
+    const cx = (x + x2) / 2 + Math.cos(ang + Math.PI / 2) * bend;
+    const cy = (y + y2) / 2 + Math.sin(ang + Math.PI / 2) * bend;
+    g.appendChild(svgEl('path', {
+      class: 'wood',
+      d: `M${x.toFixed(1)} ${y.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`,
+      'stroke-width': Math.max(d * d * .6, 1.2).toFixed(1),
+    }));
+    parent.appendChild(g);
+    branches.push({ g, d });
+    if (d === 0) {
+      // Leaves as soft washes of ink and matcha rather than a blur filter, which would be slow to animate
+      for (let k = 0; k < 3; k++) {
+        g.appendChild(svgEl('ellipse', {
+          class: r() < .3 ? 'leaf green' : 'leaf',
+          cx: (x2 + (r() - .5) * 26).toFixed(1),
+          cy: (y2 + (r() - .5) * 18).toFixed(1),
+          rx: (12 + r() * 12).toFixed(1),
+          ry: (8 + r() * 8).toFixed(1),
+        }));
+      }
+      leaves.push({ x: x2, y: y2 });
+      return;
+    }
+    const kids = d > 3 ? 2 : (r() < .4 ? 3 : 2);
+    for (let k = 0; k < kids; k++) {
+      const a = ang + (k - (kids - 1) / 2) * spread * (.7 + r() * .6) + (r() - .5) * .25;
+      grow(g, x2, y2, len * (.68 + r() * .14), a, d - 1);
+    }
+  }
+  grow(svg, x, y, length, -Math.PI / 2 + lean, depth);
+  return { branches, leaves };
+}
+
+// A gust: branches bend away from the wind and spring back, twigs a moment after the trunk.
+// Uses composite 'add' so it rides on top of the idle sway instead of replacing it.
+function gust(branches, depth, strength = 1) {
+  for (const { g, d } of branches) {
+    const a = -(1 + depth - d) * .55 * strength;
+    g.animate([
+      { rotate: '0deg' }, { rotate: `${a}deg`, offset: .35 },
+      { rotate: `${-a * .4}deg`, offset: .7 }, { rotate: `${a * .12}deg`, offset: .88 }, { rotate: '0deg' },
+    ], { duration: 2600, delay: (depth - d) * 70, easing: 'ease-in-out', composite: 'add' });
+  }
+}
+
 // Symbols drawn in a 100x100 box and colored by currentColor (the seal keeps its own colors)
 const SYMBOLS = {
   peaks: '<path d="M0 100 V72 L18 48 L30 62 L50 22 L68 58 L80 46 L100 70 V100Z" fill="currentColor"/>',

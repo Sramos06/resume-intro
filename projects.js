@@ -1,52 +1,36 @@
-// Projects page: fill in the card symbols, then keep leaves drifting down behind the shelf
+// Projects page: card symbols, and an ink tree that sways and now and then catches a gust
 document.querySelectorAll('[data-symbol]').forEach(svg => { svg.innerHTML = SYMBOLS[svg.dataset.symbol]; });
 
-const cv = document.querySelector('.ambient');
-const ctx = cv.getContext('2d');
-let W, H, dpr;
-function size() {
-  dpr = devicePixelRatio || 1;
-  W = cv.width = innerWidth * dpr;
-  H = cv.height = innerHeight * dpr;
-}
-size();
-addEventListener('resize', size);
+const treeSvg = document.querySelector('.tree-scene .tree');
+const TREE_DEPTH = 6;
+const tree = growTree(treeSvg, { seed: 7, x: 330, y: 790, length: 170, depth: TREE_DEPTH, spread: .62, lean: -.06 });
 
-const leafShape = new Path2D('M0 -10 C 6 -4, 6 4, 0 10 C -6 4, -6 -4, 0 -10Z');
-
-// Positions are fractions of the screen so a resize doesn't scatter them
-function spawn(anywhere) {
-  return {
-    x: Math.random(),
-    y: anywhere ? Math.random() : -0.05,
-    s: .6 + Math.random() * 1.1,
-    vy: .00003 + Math.random() * .00004,
-    sway: Math.random() * 6,
-    rot: Math.random() * 6,
-    vr: (Math.random() - .5) * .002,
-    green: Math.random() < .35,
-  };
-}
-const leaves = Array.from({ length: 26 }, () => spawn(true));
-
-let last = performance.now();
-function frame(now) {
-  const dt = Math.min(now - last, 50);
-  last = now;
-  ctx.clearRect(0, 0, W, H);
-  for (const l of leaves) {
-    l.y += l.vy * dt;
-    l.sway += dt * .0012;
-    l.rot += l.vr * dt;
-    if (l.y > 1.05) Object.assign(l, spawn(false));
-    ctx.save();
-    ctx.translate((l.x + Math.sin(l.sway) * .02) * W, l.y * H);
-    ctx.rotate(l.rot);
-    ctx.scale(l.s * dpr, l.s * dpr);
-    ctx.fillStyle = l.green ? 'rgba(126,148,102,.35)' : 'rgba(107,84,67,.22)';
-    ctx.fill(leafShape);
-    ctx.restore();
+// A few leaves tear off with each gust and drift away to the left
+function blowLeaves(count) {
+  const m = treeSvg.getScreenCTM();
+  for (let k = 0; k < count; k++) {
+    const src = tree.leaves[Math.floor(Math.random() * tree.leaves.length)];
+    const pt = new DOMPoint(src.x, src.y).matrixTransform(m);
+    const leaf = document.createElement('div');
+    leaf.className = 'blown-leaf' + (Math.random() < .4 ? ' green' : '');
+    leaf.style.left = pt.x + 'px';
+    leaf.style.top = pt.y + 'px';
+    document.querySelector('.tree-scene').appendChild(leaf);
+    const dx = -(180 + Math.random() * 320), dy = 60 + Math.random() * 160;
+    leaf.animate([
+      { transform: 'translate(0, 0) rotate(0deg)', opacity: 0 },
+      { opacity: .8, offset: .1 },
+      { transform: `translate(${dx * .5}px, ${dy * .3}px) rotate(${200 + Math.random() * 160}deg)`, offset: .5 },
+      { transform: `translate(${dx}px, ${dy}px) rotate(${420 + Math.random() * 240}deg)`, opacity: 0 },
+    ], { duration: 4200 + Math.random() * 2000, delay: k * 260, easing: 'ease-out', fill: 'backwards' })
+      .finished.then(() => leaf.remove());
   }
-  requestAnimationFrame(frame);
 }
-if (!reduceMotion) requestAnimationFrame(frame);
+
+function windLoop() {
+  const strength = .7 + Math.random() * .6;
+  gust(tree.branches, TREE_DEPTH, strength);
+  setTimeout(() => blowLeaves(2 + Math.floor(Math.random() * 3)), 500);
+  setTimeout(windLoop, 9000 + Math.random() * 7000);
+}
+if (!reduceMotion) setTimeout(windLoop, 3500);

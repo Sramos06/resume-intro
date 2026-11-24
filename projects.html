@@ -11,7 +11,11 @@
   <link rel="stylesheet" href="pages.css">
 </head>
 <body class="projects-page">
-  <canvas class="ambient" aria-hidden="true"></canvas>
+  <!-- A lone tree on a low hill; it sways a little and now and then catches a gust -->
+  <div class="scenery tree-scene" aria-hidden="true">
+    <svg class="hill" viewBox="0 0 1000 120" preserveAspectRatio="none"><path d="M0 120 V82 C 220 60, 420 70, 600 46 C 760 26, 880 40, 1000 30 V120 Z"/></svg>
+    <svg class="tree" viewBox="0 0 600 800" preserveAspectRatio="xMidYMax meet"></svg>
+  </div>
 
   <nav class="nav">
     <a class="mark" href="index.html" aria-label="Home">S</a>
