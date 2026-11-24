@@ -9,7 +9,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="intro-on">
+  <!-- Intro: five panels pop in on the beat, then the center one swallows the screen -->
+  <div id="intro" aria-hidden="true">
+    <div class="stage">
+      <div class="panel paper">
+        <svg viewBox="0 0 100 160"><path d="M22 128 C 34 70, 66 142, 78 34" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round"/><circle cx="78" cy="34" r="3" fill="currentColor"/></svg>
+      </div>
+      <div class="panel ink">
+        <svg viewBox="0 0 100 160"><circle cx="50" cy="66" r="28" fill="currentColor"/><circle class="cut" cx="62" cy="58" r="25"/></svg>
+      </div>
+      <div class="panel paper">
+        <svg viewBox="0 0 100 160"><circle cx="72" cy="40" r="9" style="fill: var(--coffee)"/><path d="M0 160 V112 L20 80 L32 96 L52 46 L70 86 L82 72 L100 100 V160 Z" fill="currentColor"/></svg>
+      </div>
+      <div class="panel ink">
+        <svg viewBox="0 0 100 160"><path d="M50 16 L55 30 V116 H45 V30 Z" fill="currentColor"/><rect x="33" y="116" width="34" height="5" fill="currentColor"/><rect x="47.5" y="121" width="5" height="22" fill="currentColor"/><circle cx="50" cy="146" r="4" fill="currentColor"/></svg>
+      </div>
+      <div class="panel paper">
+        <svg viewBox="0 0 100 160"><rect x="24" y="54" width="52" height="52" style="fill: var(--matcha)"/><text x="50" y="93" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="40" font-weight="600" style="fill: var(--paper-2)">S</text></svg>
+      </div>
+    </div>
+    <div class="flash"></div>
+  </div>
+  <button id="skip" type="button">Skip intro</button>
+
   <main id="home">
     <nav class="nav">
       <span class="mark" aria-label="Shawn Angel Ramos">S</span>
@@ -24,7 +47,8 @@
       <p class="eyebrow reveal">BSIT 3rd year · PUP Manila</p>
       <h1 class="reveal">Shawn Angel<br>Ramos</h1>
       <div class="rule reveal"></div>
-      <p class="lead reveal">I build web apps that people actually use, from study tools to full-stack projects.</p>    </section>
+      <p class="lead reveal">I build web apps that people actually use, from study tools to full-stack projects.</p>
+      <button id="replay" class="reveal" type="button">Replay intro</button>    </section>
 
     <div class="ridges" aria-hidden="true"></div>
   </main>

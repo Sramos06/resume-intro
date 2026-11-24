@@ -33,3 +33,72 @@ document.querySelector('.ridges').innerHTML =
   ridgeSVG(11, 170, 150, '#d6d0c4') +
   ridgeSVG(27, 215, 110, '#aba597') +
   ridgeSVG(43, 265, 60, '#2a2926');
+
+// ---------- Intro ----------
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const intro = document.getElementById('intro');
+const stage = intro.querySelector('.stage');
+const flash = intro.querySelector('.flash');
+const panels = [...intro.querySelectorAll('.panel')];
+
+// Each panel lands slightly off-grid so the row feels cut-in, not laid out
+const pose = [
+  { dy: -4, rot: -3 }, { dy: 3, rot: 2 }, { dy: 0, rot: 0 }, { dy: -3, rot: -2 }, { dy: 4, rot: 3 },
+];
+const place = (i, extra = '') => `${extra} translateY(${pose[i].dy}vh) rotate(${pose[i].rot}deg)`;
+
+let done = false;
+
+function pop(i) {
+  panels[i].animate([
+    { opacity: 0, transform: place(i, 'scale(.3)') + ` rotate(${pose[i].rot * 4}deg)` },
+    { opacity: 1, transform: place(i, 'scale(1.12)'), offset: .55 },
+    { opacity: 1, transform: place(i, 'scale(1)') },
+  ], { duration: 320, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'forwards' });
+  flash.animate([{ opacity: .22 }, { opacity: 0 }], { duration: 180 });
+  stage.animate([
+    { transform: 'translate(0,0)' }, { transform: 'translate(-6px,3px)' },
+    { transform: 'translate(4px,-2px)' }, { transform: 'translate(0,0)' },
+  ], { duration: 180 });
+}
+
+// The four side panels fly off; the center one grows until it covers the screen
+async function swallow() {
+  panels.forEach((p, i) => {
+    if (i === 2) return;
+    const side = i < 2 ? -1 : 1;
+    p.animate([
+      { opacity: 1, transform: place(i) },
+      { opacity: 0, transform: place(i, `translateX(${side * 70}vw)`) + ` rotate(${side * 25}deg)` },
+    ], { duration: 480, easing: 'cubic-bezier(.6,0,.9,.4)', fill: 'forwards' });
+  });
+  const c = panels[2], box = c.getBoundingClientRect();
+  const s = Math.max(innerWidth / box.width, innerHeight / box.height) * 1.3;
+  c.querySelector('svg').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 520, delay: 200, fill: 'forwards' });
+  await c.animate([
+    { transform: 'scale(1)' }, { transform: `scale(${s})` },
+  ], { duration: 720, delay: 120, easing: 'cubic-bezier(.7,0,.2,1)', fill: 'forwards' }).finished;
+}
+
+function showHome() {
+  if (done) return;
+  done = true;
+  document.body.classList.remove('intro-on');
+  document.querySelectorAll('.reveal').forEach((el, i) => el.animate([
+    { opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' },
+  ], { duration: 700, delay: 80 * i, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' }));
+}
+
+async function playIntro() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return showHome();
+  await wait(500);
+  for (let i = 0; i < panels.length && !done; i++) { pop(i); await wait(270); }
+  await wait(450);
+  if (done) return;
+  await swallow();
+  showHome();
+}
+
+document.getElementById('skip').addEventListener('click', showHome);
+document.getElementById('replay').addEventListener('click', () => location.reload());
+playIntro();
