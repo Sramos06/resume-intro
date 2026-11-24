@@ -31,6 +31,19 @@ function ridgeSVG(seed, base, height, fill) {
   return `<svg viewBox="0 0 1000 300" preserveAspectRatio="none"><path d="${ridgePath(seed, base, height)}" fill="${fill}"/></svg>`;
 }
 
+// Symbols drawn in a 100x100 box and colored by currentColor (the seal keeps its own colors)
+const SYMBOLS = {
+  peaks: '<path d="M0 100 V72 L18 48 L30 62 L50 22 L68 58 L80 46 L100 70 V100Z" fill="currentColor"/>',
+  moon: '<path d="M60 18 A32 32 0 1 0 60 82 A40 40 0 0 1 60 18Z" fill="currentColor"/>',
+  sword: '<path d="M50 6 L54 16 V70 H46 V16Z M36 70 H64 V74 H36Z M48 74 H52 V90 H48Z" fill="currentColor"/><circle cx="50" cy="93" r="3.5" fill="currentColor"/>',
+  brush: '<path d="M22 84 C 34 40, 62 92, 78 18" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>',
+  pine: '<path d="M50 8 L70 40 H58 L76 66 H56 V92 H44 V66 H24 L42 40 H30Z" fill="currentColor"/>',
+  cloud: '<path d="M14 66 C4 66 4 50 16 50 C16 36 34 34 38 44 C42 28 66 28 66 46 C80 44 88 62 74 66Z" fill="currentColor"/>',
+  leaf: '<path d="M50 92 C20 70 20 30 50 8 C80 30 80 70 50 92Z" fill="currentColor"/>',
+  seal: '<rect x="14" y="14" width="72" height="72" fill="#7e9466"/><text x="50" y="66" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="46" font-weight="600" fill="#f6f3ec">S</text>',
+};
+const symbol = (name, cls = '') => `<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true">${SYMBOLS[name]}</svg>`;
+
 // Mark the nav link for this page
 const here = location.pathname.split('/').pop() || 'index.html';
 document.querySelectorAll('.nav a').forEach(a => {
