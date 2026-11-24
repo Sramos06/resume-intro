@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · Shawn Angel Ramos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body class="projects-page">
+  <canvas class="ambient" aria-hidden="true"></canvas>
+
+  <nav class="nav">
+    <a class="mark" href="index.html" aria-label="Home">S</a>
+    <ul>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="resume.html">Resume</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+    <header class="page-head">
+      <p class="kicker" data-reveal>Work</p>
+      <h1 data-reveal>Projects</h1>
+      <p class="lead" data-reveal>Things I've built, from a study app I use every exam week to a game on Roblox.</p>
+    </header>
+
+    <section class="shelf">
+      <article class="scroll featured" data-reveal style="--d: 0s">
+        <div class="scroll-body">
+          <svg class="sym" viewBox="0 0 100 100" aria-hidden="true" data-symbol="brush"></svg>
+          <p class="status">Shipped · v2.1</p>
+          <h2>Repaso</h2>
+          <p>A local-first study app for the HTML reviewers I make before exams. Every reviewer is on my phone before I need it and opens with no internet.</p>
+          <ul class="tags"><li>Next.js</li><li>TypeScript</li><li>Postgres</li><li>Drizzle</li><li>Auth.js</li><li>PWA</li></ul>
+          <p class="links">
+            <a class="btn-link" href="repaso.html">Read the case study</a>
+            <a class="btn-link" href="https://repaso-six.vercel.app" target="_blank" rel="noopener">Live</a>
+            <a class="btn-link" href="https://github.com/Sramos06/repaso" target="_blank" rel="noopener">Code</a>
+          </p>
+        </div>
+      </article>
+
+      <article class="scroll" data-reveal style="--d: -1.5s">
+        <div class="scroll-body">
+          <svg class="sym" viewBox="0 0 100 100" aria-hidden="true" data-symbol="peaks"></svg>
+          <p class="status wip">In progress</p>
+          <h2>Hygears Web Portal</h2>
+          <p>A web portal and database for a PUP student research org that builds electric vehicles: an equipment logbook and borrowing system.</p>
+          <ul class="tags"><li>Web app</li><li>Database</li><li>Group project</li></ul>
+        </div>
+      </article>
+
+      <article class="scroll" data-reveal style="--d: -3s">
+        <div class="scroll-body">
+          <svg class="sym" viewBox="0 0 100 100" aria-hidden="true" data-symbol="sword"></svg>
+          <p class="status wip">Built · publishing soon</p>
+          <h2>Daoborn</h2>
+          <p>A cultivation RPG on Roblox with three maps, five realms to break through, and a full test harness behind the game systems.</p>
+          <ul class="tags"><li>Luau</li><li>Roblox Studio</li></ul>
+        </div>
+      </article>
+
+      <article class="scroll" data-reveal style="--d: -4.5s">
+        <div class="scroll-body">
+          <svg class="sym" viewBox="0 0 100 100" aria-hidden="true" data-symbol="moon"></svg>
+          <p class="status wip">Prototype</p>
+          <h2>Alert Simulator</h2>
+          <p>A survey, alert gallery and alert composer for our research study on how emergency alert wording affects whether people act on it.</p>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Research</li></ul>
+          <p class="links">
+            <a class="btn-link" href="https://github.com/Sramos06/alert-simulator-prototype" target="_blank" rel="noopener">Code</a>
+          </p>
+        </div>
+      </article>
+
+      <article class="scroll" data-reveal style="--d: -2s">
+        <div class="scroll-body">
+          <svg class="sym" viewBox="0 0 100 100" aria-hidden="true" data-symbol="leaf"></svg>
+          <p class="status">Shipped</p>
+          <h2>Resume Website</h2>
+          <p>My first resume site, laid out like a code editor in a matcha and coffee theme. The site you're on is its next version.</p>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+          <p class="links">
+            <a class="btn-link" href="https://resume-website-phi-red.vercel.app" target="_blank" rel="noopener">Live</a>
+            <a class="btn-link" href="https://github.com/Sramos06/resume-website" target="_blank" rel="noopener">Code</a>
+          </p>
+        </div>
+      </article>
+
+      <article class="scroll" data-reveal style="--d: -3.5s">
+        <div class="scroll-body">
+          <svg class="sym" viewBox="0 0 100 100" aria-hidden="true" data-symbol="cloud"></svg>
+          <p class="status">Shipped</p>
+          <h2>Simple Ordering System</h2>
+          <p>The desktop UI for our OOP final: a Java Swing front end on a teammate's MVC backend, kept to the level the class was taught.</p>
+          <ul class="tags"><li>Java</li><li>Swing</li><li>Group project</li></ul>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="foot-line">Let's build something.</p>
+    <ul>
+      <li><a href="https://github.com/Sramos06" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sramos006" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+    <small>© 2026 Shawn Angel Ramos</small>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="projects.js"></script>
+</body>
+</html>
