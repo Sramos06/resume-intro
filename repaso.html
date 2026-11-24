@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Repaso case study · Shawn Angel Ramos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body class="case-page">
+  <nav class="nav">
+    <a class="mark" href="index.html" aria-label="Home">S</a>
+    <ul>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="resume.html">Resume</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+    <header class="case-head">
+      <div class="sky" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="kicker" data-reveal>Case study</p>
+      <h1 data-reveal>Repaso</h1>
+      <p class="lead" data-reveal>A local-first study app for the HTML reviewers I make before exams. Every reviewer is on my phone before I need it, and it opens with no internet at all.</p>
+      <dl class="meta" data-reveal>
+        <div><dt>Role</dt><dd>Solo: product, design calls, testing</dd></div>
+        <div><dt>Built</dt><dd>July 2026, about two weeks</dd></div>
+        <div><dt>Stack</dt><dd>Next.js, TypeScript, Neon Postgres, Drizzle, Auth.js, Vercel</dd></div>
+        <div><dt>Links</dt><dd><a class="btn-link" href="https://repaso-six.vercel.app" target="_blank" rel="noopener">Live</a> · <a class="btn-link" href="https://github.com/Sramos06/repaso" target="_blank" rel="noopener">Code</a></dd></div>
+      </dl>
+    </header>
+
+    <div class="case">
+      <aside class="rail" aria-label="Sections">
+        <div class="track"><div class="ink"></div></div>
+        <ol>
+          <li><a href="#problem">The problem</a></li>
+          <li><a href="#built">What I built</a></li>
+          <li><a href="#decisions">Decisions</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#learned">What I learned</a></li>
+          <li><a href="#ai">How I used AI</a></li>
+        </ol>
+      </aside>
+
+      <article>
+        <section id="problem" data-reveal>
+          <h2>The problem</h2>
+          <p>I make a lot of reviewers, usually more than one per subject. They piled up in my downloads folder until finding the right one meant scrolling past every file I had ever saved, so I'd just make a new one and make the pile worse.</p>
+          <p>Exams were the real push. I'd make a reviewer on my laptop, forget to send it to my phone, and then try to pull it up on campus wifi shared with thousands of students. Plenty of times it just wouldn't load, an hour before a test.</p>
+        </section>
+
+        <section id="built" data-reveal>
+          <h2>What I built</h2>
+          <ul>
+            <li>Upload reviewers by dropping <code>.html</code> files or pasting HTML, up to 15 MB, stored compressed.</li>
+            <li>An installable app that opens every reviewer offline, in a sandboxed frame so the quizzes inside still work.</li>
+            <li>Notes on every reviewer with version history, plus a global scratchpad.</li>
+            <li>Search that looks inside reviewers, subjects, pins, an archive, and bulk actions.</li>
+            <li>Private read-only share links I can turn off anytime.</li>
+            <li>Study stats with streaks and a year calendar, four themes, and one-file JSON backups.</li>
+          </ul>
+        </section>
+
+        <section id="decisions" data-reveal>
+          <h2>Decisions and trade-offs</h2>
+          <h3>Free forever, no card anywhere</h3>
+          <p>Neon, Vercel and Google sign-in all have free tiers a single-user app never outgrows. Picking the stack around that limit, instead of whatever was easiest, was the first real architecture call I made.</p>
+          <h3>The device is the source of truth</h3>
+          <p>Every reviewer and note lives in the browser's IndexedDB, so everything opens instantly with or without signal. Writes land locally first, then join an ordered outbox that syncs to the cloud when the network comes back. If two devices edit the same note, both versions are kept instead of one being dropped.</p>
+          <h3>Compress at rest</h3>
+          <p>Vercel's free plan caps request and response bodies at about 4.5 MB, smaller than some of my reviewers. Storing them gzipped kept big files working without paying for anything.</p>
+        </section>
+
+        <section id="results" data-reveal>
+          <h2>Results</h2>
+          <div class="stats">
+            <div class="stat"><b data-count="131">131</b><span>automated tests passing</span></div>
+            <div class="stat"><b data-count="177">177</b><span>commits, July 9 to 19</span></div>
+            <div class="stat"><b data-count="4">4</b><span>themes, synced to my account</span></div>
+          </div>
+          <p>It's the app I actually study from now. Every reviewer is already on my phone before exam day.</p>
+        </section>
+
+        <section id="learned" data-reveal>
+          <h2>What I learned</h2>
+          <p><strong>Syncing is much harder than it looks.</strong> I thought keeping a copy on the device was just saving the file twice. Dropped signal mid-save, a tab closed before an upload finished, two devices editing one note: each is a way to quietly lose work, and each needed its own answer.</p>
+          <p><strong>Research first.</strong> I never properly tried Drive or Notion before building my own. It worked out, but I'd do that step next time.</p>
+        </section>
+
+        <section id="ai" data-reveal>
+          <h2>How I used AI</h2>
+          <p>I didn't write the code. Claude did. My job was deciding what this had to be and not accepting it until it was: the rules it had to build inside, the design calls, and testing every version on a real phone and laptop.</p>
+          <p>Reviewing everything by hand didn't scale, so I moved to a loop where work gets reviewed in passes before it reaches me. That caught real bugs, including ones that would have silently lost my notes. Knowing how to direct these tools and check them properly is most of the skill.</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <p class="foot-line">Let's build something.</p>
+    <ul>
+      <li><a href="https://github.com/Sramos06" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sramos006" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+    <small>© 2026 Shawn Angel Ramos</small>
+  </footer>
+
+  <script src="common.js"></script>
+  <script src="case.js"></script>
+</body>
+</html>
