@@ -49,9 +49,65 @@ body {
   font-weight: 600;
   font-size: 20px;
 }
+a.mark { text-decoration: none; }
 .nav ul { display: flex; gap: clamp(16px, 3vw, 32px); list-style: none; padding: 0; }
-.nav a { color: var(--ink); text-decoration: none; }
-.nav a:hover, .nav a:focus-visible { color: var(--coffee); }
+.nav ul a {
+  position: relative;
+  color: var(--ink);
+  text-decoration: none;
+  padding-bottom: 4px;
+}
+/* A brush-thin matcha line that grows under the hovered or current page */
+.nav ul a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--matcha);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.nav ul a:hover::after, .nav ul a:focus-visible::after, .nav ul a[aria-current="page"]::after { transform: scaleX(1); }
+
+/* Footer, shared by every page */
+.foot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 32px;
+  padding: 40px clamp(20px, 5vw, 64px);
+  background: var(--ink);
+  color: var(--paper);
+}
+.foot-line { font-family: "Cormorant Garamond", serif; font-size: 28px; margin-right: auto; }
+.foot ul { display: flex; gap: 24px; list-style: none; padding: 0; }
+.foot a { color: var(--paper); text-decoration: none; border-bottom: 1px solid var(--matcha); }
+.foot a:hover, .foot a:focus-visible { color: var(--matcha); }
+.foot small { width: 100%; color: #8f8a80; font-size: 12px; }
+
+/* Scroll reveal: elements rise in once */
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .8s, transform .8s cubic-bezier(.2,.7,.2,1); }
+[data-reveal].in { opacity: 1; transform: none; }
+
+/* Ink wipe between pages, with a matcha edge leading it */
+.wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--ink);
+  box-shadow: 6px 0 0 var(--matcha);
+  transform: translateX(101%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
 
 .hero {
   position: relative;
