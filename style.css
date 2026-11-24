@@ -1,0 +1,105 @@
+/* Ink and paper, with matcha and coffee kept to small accents */
+:root {
+  --ink: #141413;
+  --ink-2: #2a2926;
+  --paper: #ece8df;
+  --paper-2: #f6f3ec;
+  --mute: #6e6a61;
+  --matcha: #7e9466;
+  --coffee: #6b5443;
+  --line: #cfc9bc;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Inter, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Main page */
+#home {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+.nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px clamp(20px, 5vw, 64px);
+  font-size: 14px;
+  letter-spacing: .04em;
+}
+.mark {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  background: var(--matcha);
+  color: var(--paper-2);
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 20px;
+}
+.nav ul { display: flex; gap: clamp(16px, 3vw, 32px); list-style: none; padding: 0; }
+.nav a { color: var(--ink); text-decoration: none; }
+.nav a:hover, .nav a:focus-visible { color: var(--coffee); }
+
+.hero {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  padding: 0 clamp(20px, 5vw, 64px) 24vh;
+}
+.eyebrow {
+  font-size: 13px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--coffee);
+}
+h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(52px, 9vw, 128px);
+  line-height: .95;
+  margin: 14px 0 0;
+}
+.rule { width: 72px; height: 2px; background: var(--matcha); margin: 26px 0; }
+.lead {
+  max-width: 36ch;
+  color: var(--mute);
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.55;
+}
+
+/* Ink-wash ridges, far to near */
+.ridges {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 48vh;
+  z-index: 1;
+  pointer-events: none;
+}
+.ridges svg {
+  position: absolute;
+  bottom: 0;
+  left: -6%;
+  width: 112%;
+  height: 100%;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+.ridges svg:nth-child(2) { animation-duration: 19s; }
+.ridges svg:nth-child(3) { animation-duration: 14s; }
+@keyframes drift { to { transform: translateX(3%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ridges svg { animation: none; }
+}
