@@ -1,10 +1,32 @@
 // Home page: the intro (helpers live in common.js)
 
-// Main page: three layers, pale and tall in the back, dark and low in front
-document.querySelector('.ridges').innerHTML =
-  ridgeSVG(11, 170, 150, '#d6d0c4') +
-  ridgeSVG(27, 215, 110, '#aba597') +
-  ridgeSVG(43, 265, 60, '#2a2926');
+// ---------- Landscape ----------
+// Far ridges are tall and pale, near ones low and dark, like ink thinning with distance
+const RIDGES = [
+  ['.r1', 11, 150, 140, '#ddd7cb'],
+  ['.r2', 27, 170, 120, '#c3bcae'],
+  ['.r3', 43, 190, 100, '#8f897d'],
+  ['.r4', 58, 220, 70, '#2a2926'],
+];
+for (const [sel, seed, base, height, fill] of RIDGES) {
+  document.querySelector('.landscape ' + sel).innerHTML = ridgeSVG(seed, base, height, fill);
+}
+
+// A pair of birds crosses the sky every so often
+const landscape = document.querySelector('.landscape');
+function birds() {
+  const b = document.createElement('div');
+  b.className = 'bird';
+  b.innerHTML = '<svg viewBox="0 0 60 30"><path d="M2 12 Q8 5 14 12 Q20 5 26 12"/><path d="M32 22 Q37 16 42 22 Q47 16 52 22"/></svg>';
+  b.style.top = 10 + Math.random() * 16 + '%';
+  landscape.appendChild(b);
+  b.animate([
+    { transform: 'translate(0, 0)' },
+    { transform: `translate(${innerWidth + 140}px, ${-20 + Math.random() * 40}px)` },
+  ], { duration: 24000 + Math.random() * 8000 }).finished.then(() => b.remove());
+  setTimeout(birds, 20000 + Math.random() * 20000);
+}
+if (!reduceMotion) setTimeout(birds, 5000);
 
 // ---------- Intro ----------
 const wait = ms => new Promise(r => setTimeout(r, ms));

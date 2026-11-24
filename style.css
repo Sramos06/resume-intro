@@ -244,26 +244,61 @@ body:not(.intro-on) #intro, body:not(.intro-on) #skip { display: none; }
   mix-blend-mode: difference;
 }
 
-/* Ink-wash ridges, far to near */
-.ridges {
+/* Home landscape: still mountains, slow mist, the odd pair of birds */
+.landscape {
   position: absolute;
-  inset: auto 0 0 0;
-  height: 48vh;
+  inset: 0;
   z-index: 1;
+  overflow: hidden;
   pointer-events: none;
+  background: linear-gradient(var(--paper-2), var(--paper) 62%);
 }
-.ridges svg {
+.landscape .sun {
   position: absolute;
-  bottom: 0;
-  left: -6%;
-  width: 112%;
-  height: 100%;
-  animation: drift 26s ease-in-out infinite alternate;
+  top: 14%;
+  right: 15%;
+  width: 12vw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(107, 84, 67, .15) 0 58%, transparent 61%);
 }
-.ridges svg:nth-child(2) { animation-duration: 19s; }
-.ridges svg:nth-child(3) { animation-duration: 14s; }
-@keyframes drift { to { transform: translateX(3%); } }
+.landscape .ridge { position: absolute; bottom: 0; left: -2%; width: 104%; }
+.landscape .ridge svg { display: block; width: 100%; height: 100%; }
+.ridge.r1 { height: 50vh; }
+.ridge.r2 { height: 40vh; }
+.ridge.r3 { height: 28vh; }
+.ridge.r4 { height: 14vh; }
+
+/* Each mist band is two screens wide with the same pattern in both halves,
+   so sliding it left by one screen loops without a seam */
+.mist {
+  position: absolute;
+  left: 0;
+  width: 200vw;
+  height: 16vh;
+  background:
+    radial-gradient(ellipse 22% 50% at 25% 50%, rgba(246, 243, 236, .9), transparent 70%),
+    radial-gradient(ellipse 22% 50% at 75% 50%, rgba(246, 243, 236, .75), transparent 70%);
+  animation: mist 140s linear infinite;
+}
+.mist.m1 { bottom: 27vh; }
+.mist.m2 { bottom: 8vh; height: 12vh; animation-duration: 100s; animation-direction: reverse; }
+@keyframes mist { to { transform: translateX(-100vw); } }
+
+.bird { position: absolute; left: -70px; width: 46px; opacity: .55; }
+.bird svg { display: block; width: 100%; overflow: visible; }
+.bird path {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flap .8s ease-in-out infinite;
+}
+.bird path + path { animation-delay: -.3s; }
+@keyframes flap { 50% { transform: scaleY(.35); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .ridges svg { animation: none; }
+  .mist { animation: none; }
 }
