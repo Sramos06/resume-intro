@@ -20,7 +20,7 @@ Moving between pages uses an ink wipe. Everything respects the reduced-motion se
 
 1. **Collage.** The camera zooms out from the seal while torn-paper cutouts slide in from the edges and ribbons sweep across, then it blurs into a white flash.
 2. **Panorama.** One ink landscape is revealed as five tinted slices that bloom in on the beat. A vertical word column gets pushed right by each slice, while ribbons loop in front.
-3. **Exit.** A blur-zoom with a shake drops into a fly-forward through the mountains, which lands on the main page.
+3. **Exit.** A blur-zoom with a shake fades straight into the home page.
 
 It plays once per visit. **Replay intro** on the main page plays it again.
 
@@ -29,7 +29,7 @@ It plays once per visit. **Replay intro** on the main page plays it again.
 Plain HTML, CSS and JavaScript with no build step and no libraries.
 
 - `common.js` holds the shared pieces: seeded mountain ridgelines, the SVG symbol set, scroll reveals and the page wipe.
-- The animations use the Web Animations API and CSS. The fly-through is a CSS 3D perspective scene, and the leaves, specks and ink streaks are drawn on `<canvas>`.
+- The animations use the Web Animations API and CSS. The leaves and specks are drawn on `<canvas>`.
 - Art and symbol plans are in [`docs/art-ideas.md`](docs/art-ideas.md).
 
 ## Run locally

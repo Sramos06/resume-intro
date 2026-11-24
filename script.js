@@ -1,4 +1,4 @@
-// Home page: ridges, then the intro and fly-through (helpers live in common.js)
+// Home page: the intro (helpers live in common.js)
 
 // Main page: three layers, pale and tall in the back, dark and low in front
 document.querySelector('.ridges').innerHTML =
@@ -167,7 +167,7 @@ async function actTwo() {
   await wait(650);
 }
 
-// Motion-blur zoom with a shake, revealing the fly-through underneath
+// Motion-blur zoom with a shake, revealing the home page underneath
 function exitZoom() {
   intro.animate([{ backgroundColor: '#f6f3ec' }, { backgroundColor: 'rgba(246,243,236,0)' }], { duration: 600, fill: 'forwards' });
   return lineup.animate([
@@ -178,78 +178,10 @@ function exitZoom() {
   ], { duration: 620, easing: 'cubic-bezier(.5,0,.9,.5)', fill: 'forwards' }).finished;
 }
 
-// ---------- Fly-through ----------
-const fly = document.getElementById('fly');
-const scene = fly.querySelector('.scene');
-const canvas = fly.querySelector('canvas');
-const LAYERS = 6, LAYER_MS = 1700, STAGGER = 160;
-
-// Ink streaks radiating from the vanishing point, speeding up as we fly
-function streaks(duration) {
-  const dpr = devicePixelRatio || 1;
-  const w = canvas.width = innerWidth * dpr, h = canvas.height = innerHeight * dpr;
-  const ctx = canvas.getContext('2d');
-  const cx = w * .5, cy = h * .42, maxR = Math.hypot(w, h) * .6;
-  const pts = Array.from({ length: 140 }, () => ({
-    a: Math.random() * Math.PI * 2,
-    r: Math.random() * maxR,
-    v: .15 + Math.random() * .5,
-    green: Math.random() < .1,
-  }));
-  const start = performance.now();
-  let last = start;
-  (function frame(now) {
-    const t = Math.min((now - start) / duration, 1), dt = now - last;
-    last = now;
-    ctx.clearRect(0, 0, w, h);
-    ctx.lineCap = 'round';
-    const alpha = Math.min(t * 2.5, 1) * (1 - Math.max(0, t - .85) / .15) * .4;
-    for (const p of pts) {
-      p.r += p.v * dt * dpr * (1 + 9 * t * t);
-      if (p.r > maxR) p.r = Math.random() * maxR * .15;
-      const len = (6 + 70 * t) * dpr * (p.r / maxR + .2);
-      const cos = Math.cos(p.a), sin = Math.sin(p.a);
-      ctx.strokeStyle = p.green ? `rgba(126,148,102,${alpha * 1.6})` : `rgba(20,20,19,${alpha})`;
-      ctx.lineWidth = (p.green ? 2 : 1.2) * dpr;
-      ctx.beginPath();
-      ctx.moveTo(cx + cos * p.r, cy + sin * p.r);
-      ctx.lineTo(cx + cos * (p.r + len), cy + sin * (p.r + len));
-      ctx.stroke();
-    }
-    if (t < 1 && !done) requestAnimationFrame(frame);
-  })(start);
-}
-
-// Ridges start far back and pass just in front of the camera, one after another
-async function flyThrough() {
-  scene.innerHTML = '';
-  fly.classList.add('on');
-  let last;
-  for (let i = 0; i < LAYERS; i++) {
-    const layer = document.createElement('div');
-    layer.className = 'layer';
-    layer.style.left = `${-60 + (i % 2 ? 12 : -12)}vw`;
-    layer.innerHTML = ridgeSVG(100 + i * 7, 150 + (i % 3) * 25, 120, i % 2 ? '#55524b' : '#2a2926');
-    scene.appendChild(layer);
-    last = layer.animate([
-      { transform: 'translateZ(-3200px)', opacity: 0 },
-      { opacity: .5, offset: .15 },
-      { opacity: 1, offset: .8 },
-      { transform: 'translateZ(650px)', opacity: 0 },
-    ], { duration: LAYER_MS, delay: i * STAGGER, easing: 'cubic-bezier(.55,0,.9,.6)', fill: 'both' });
-  }
-  streaks(LAYER_MS + (LAYERS - 1) * STAGGER);
-  await last.finished;
-}
-
 function showHome() {
   if (done) return;
   done = true;
   document.body.classList.remove('intro-on');
-  if (fly.classList.contains('on')) {
-    fly.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 450, fill: 'forwards' })
-      .finished.then(() => fly.classList.remove('on'));
-  }
   document.querySelectorAll('.reveal').forEach((el, i) => el.animate([
     { opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' },
   ], { duration: 700, delay: 80 * i, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' }));
@@ -264,10 +196,7 @@ async function playIntro() {
   if (done) return;
   await actTwo();
   if (done) return;
-  const flying = flyThrough();
   await exitZoom();
-  intro.style.visibility = 'hidden';
-  await flying;
   showHome();
 }
 
