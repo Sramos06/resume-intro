@@ -1,5 +1,7 @@
 // About page: symbols, staggered skill underlines, and specks of light rising like qi
 document.querySelectorAll('[data-symbol]').forEach(svg => { svg.innerHTML = SYMBOLS[svg.dataset.symbol]; });
+document.querySelector('.print-btn').addEventListener('click', () => print());
+
 document.querySelectorAll('.skills ul').forEach(ul =>
   [...ul.children].forEach((li, k) => li.style.setProperty('--k', k)));
 
