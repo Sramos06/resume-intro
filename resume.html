@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume · Shawn Angel Ramos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body class="resume-page">
+  <div class="blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <nav class="nav">
+    <a class="mark" href="index.html" aria-label="Home">S</a>
+    <ul>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="resume.html">Resume</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+    <div class="sheet-tools">
+      <h1>Resume</h1>
+      <button class="print-btn" type="button">Save as PDF</button>
+    </div>
+
+    <article class="sheet">
+      <div class="stamp" aria-hidden="true">BSIT<br>PUP<br>'28</div>
+      <header>
+        <h2>Shawn Angel Ramos</h2>
+        <p class="contact-line">
+          <span>Manila, Philippines</span>
+          <a href="https://github.com/Sramos06">github.com/Sramos06</a>
+          <a href="https://www.linkedin.com/in/sramos006">linkedin.com/in/sramos006</a>
+        </p>
+      </header>
+
+      <section data-reveal>
+        <h3>Education</h3>
+        <div class="entry">
+          <div class="entry-top"><b>Polytechnic University of the Philippines</b><span class="when">2024 to 2028 (expected)</span></div>
+          <p class="sub">BS Information Technology</p>
+          <ul><li>President's Lister, AY 2024 to 2025</li></ul>
+        </div>
+      </section>
+
+      <section data-reveal>
+        <h3>Projects</h3>
+        <div class="entry">
+          <div class="entry-top"><b>Repaso</b><span class="when">2026</span></div>
+          <ul>
+            <li>Built a local-first study app (Next.js, TypeScript, Postgres) that opens every saved reviewer offline on phone and laptop.</li>
+            <li>Designed an ordered outbox sync from IndexedDB to the cloud that keeps both versions on a conflict, so no note is ever dropped.</li>
+            <li>Shipped v2.1 with 131 automated tests, on free tiers only.</li>
+          </ul>
+        </div>
+        <div class="entry">
+          <div class="entry-top"><b>Daoborn</b><span class="when">2026</span></div>
+          <ul><li>Built a cultivation RPG on Roblox in Luau with three maps, five realms and an automated test harness for the game systems.</li></ul>
+        </div>
+        <div class="entry">
+          <div class="entry-top"><b>Emergency Alert Simulator</b><span class="when">2026</span></div>
+          <ul><li>Prototyped the survey, alert gallery and alert composer for a research study on how alert wording affects whether people act.</li></ul>
+        </div>
+        <div class="entry">
+          <div class="entry-top"><b>Hygears Web Portal</b><span class="when">2026, in progress</span></div>
+          <ul><li>Building a web portal and database for a PUP student research org that builds electric vehicles.</li></ul>
+        </div>
+      </section>
+
+      <section data-reveal>
+        <h3>Experience</h3>
+        <div class="entry">
+          <div class="entry-top"><b>Remotasks</b><span class="when">2020 to 2021</span></div>
+          <p class="sub">Freelance data annotator</p>
+        </div>
+      </section>
+
+      <section data-reveal>
+        <h3>Skills</h3>
+        <p class="skill-line"><b>Languages:</b> Python, Java, JavaScript, TypeScript, SQL, HTML, CSS, Luau</p>
+        <p class="skill-line"><b>Tools:</b> Next.js, Git and GitHub, Postgres, Vercel, Roblox Studio, Claude Code</p>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <p class="foot-line">Let's build something.</p>
+    <ul>
+      <li><a href="https://github.com/Sramos06" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sramos006" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+    <small>© 2026 Shawn Angel Ramos</small>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>document.querySelector('.print-btn').addEventListener('click', () => print());</script>
+</body>
+</html>
